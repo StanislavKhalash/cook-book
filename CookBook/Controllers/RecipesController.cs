@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using CookBook.SqlDataAccess;
+using System.Data.Entity;
 
 namespace CookBook.Controllers
 {
@@ -30,14 +31,40 @@ namespace CookBook.Controllers
         [HttpPost]
         public ActionResult Create([Bind]Recipe recipe)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _db.Recipes.Add(recipe);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return View(recipe);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(Guid recipeId)
+        {
+            var model = _db.Recipes.Find(recipeId);
+            if (model != null)
+            {
+                return View(model);
+            }
+
+            return new HttpNotFoundResult();
+        }
+
+        // POST: Create
+        [HttpPost]
+        public ActionResult Edit([Bind]Recipe recipe)
+        {
+            if(ModelState.IsValid)
+            {
+                _db.Entry(recipe).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(recipe);
         }
 
         protected override void Dispose(bool disposing)

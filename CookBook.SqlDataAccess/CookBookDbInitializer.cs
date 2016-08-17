@@ -7,10 +7,7 @@ namespace CookBook.SqlDataAccess
     {
         protected override void Seed(CookBookDb context)
         {
-            for(int i = 0; i < 50; ++i)
-            {
-                context.Recipes.Add(new Recipe() { Id = Guid.NewGuid(), Name = "Ceasar Salad", Description = "It's the best salad!", Rate = 3 });
-            }
+            context.Recipes.Add(new Recipe() { Id = Guid.NewGuid(), Name = "Ceasar Salad", Description = "It's the best salad!", Rate = 3 });
 
             base.Seed(context);
         }
