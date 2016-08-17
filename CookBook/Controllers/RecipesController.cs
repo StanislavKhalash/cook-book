@@ -15,7 +15,27 @@ namespace CookBook.Controllers
         // GET: Recipes
         public ActionResult Index()
         {
-            var recipes = _db.Recipes.ToList();
+            var recipes = _db.Recipes.OrderBy(recipe => recipe.Name).ToList();
+            return View(recipes);
+        }
+
+        // GET: Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Create
+        [HttpPost]
+        public ActionResult Create([Bind]Recipe recipe)
+        {
+            if(ModelState.IsValid)
+            {
+                _db.Recipes.Add(recipe);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
             return View();
         }

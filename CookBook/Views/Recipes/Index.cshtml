@@ -3,5 +3,26 @@
     ViewBag.Title = "All Recipes";
 }
 
+@model IEnumerable<CookBook.SqlDataAccess.Recipe>
+
 <h2>All Recipes</h2>
 
+<table class="table table-condensed table-striped">
+    <tr>
+        <th>Recipe</th>
+        <th>Description</th>
+        <th>Rate</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.Name</th>
+            <th>@item.Description</th>
+            <th>@item.Rate</th>
+        </tr>
+    }
+</table>
+
+<p>
+    <a href='@Url.Action("Create", "Recipes")'>Create</a>
+</p>

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace CookBook.SqlDataAccess
 {
     public class CookBookDb : DbContext
     {
+        static CookBookDb()
+        {
+            Database.SetInitializer(new CookBookDbInitializer());
+        }
+
         public CookBookDb() : base("name=DefaultConnection")
         {
         }
