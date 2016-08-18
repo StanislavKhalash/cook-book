@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using AutoMapper;
 using CookBook.SqlDataAccess;
-using System.Data.Entity;
+using CookBook.ViewModels;
 
 namespace CookBook.Controllers
 {
@@ -16,7 +18,10 @@ namespace CookBook.Controllers
         // GET: Recipes
         public ActionResult Index()
         {
-            var recipes = _db.Recipes.OrderBy(recipe => recipe.Name).ToList();
+            var recipes = _db.Recipes
+                .OrderBy(recipe => recipe.Name)
+                .Select(Mapper.Map<RecipeViewModel>)
+                .ToList();
             return View(recipes);
         }
 
@@ -29,11 +34,11 @@ namespace CookBook.Controllers
 
         // POST: Create
         [HttpPost]
-        public ActionResult Create([Bind]Recipe recipe)
+        public ActionResult Create(RecipeViewModel recipe)
         {
             if (ModelState.IsValid)
             {
-                _db.Recipes.Add(recipe);
+                _db.Recipes.Add(Mapper.Map<Recipe>(recipe));
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -47,7 +52,7 @@ namespace CookBook.Controllers
             var model = _db.Recipes.Find(recipeId);
             if (model != null)
             {
-                return View(model);
+                return View(Mapper.Map<RecipeViewModel>(model));
             }
 
             return new HttpNotFoundResult();
@@ -55,11 +60,11 @@ namespace CookBook.Controllers
 
         // POST: Create
         [HttpPost]
-        public ActionResult Edit([Bind]Recipe recipe)
+        public ActionResult Edit(RecipeViewModel recipe)
         {
             if(ModelState.IsValid)
             {
-                _db.Entry(recipe).State = EntityState.Modified;
+                _db.Entry(Mapper.Map<Recipe>(recipe)).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
