@@ -62,7 +62,7 @@ namespace CookBook.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(Guid recipeId)
+        public ActionResult Edit(int recipeId)
         {
             var model = _db.Recipes.Find(recipeId);
             if (model != null)
@@ -73,7 +73,7 @@ namespace CookBook.Controllers
             return new HttpNotFoundResult();
         }
 
-        // POST: Create
+        // POST: Edit
         [HttpPost]
         public ActionResult Edit(RecipeViewModel recipe)
         {

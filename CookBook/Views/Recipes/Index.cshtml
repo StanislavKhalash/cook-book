@@ -31,6 +31,7 @@
                     <th>Recipe</th>
                     <th>Description</th>
                     <th>Rate</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -39,6 +40,11 @@
                     <td><span data-bind="text: name"></span></td>
                     <td><span data-bind="text: description"></span></td>
                     <td><span data-bind="text: rate"></span></td>
+                    <td>
+                        <a data-bind="attr: { href: editUrl }" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

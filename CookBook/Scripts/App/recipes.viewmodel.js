@@ -32,7 +32,7 @@
     self.search = function () {
         $.ajax({
             method: "GET",
-            url: "/recipes/Search",
+            url: "/recipes/search",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: {
@@ -41,6 +41,9 @@
                 pageSize: self.pageSize
             },
             success: function (data) {
+                data.recipes.forEach(function (entry) {
+                    entry.editUrl = "/recipes/edit/?recipeId=" + entry.id;
+                });
                 self.searchResults(data.recipes);
                 self.pageCount(data.pageCount)
             }
