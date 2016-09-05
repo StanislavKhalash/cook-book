@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CookBook.ViewModels;
+using CookBook.Models;
 using CookBook.SqlDataAccess;
 
 namespace CookBook.App_Start

@@ -1,28 +1,64 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "All Recipes";
 }
 
-@model IEnumerable<CookBook.ViewModels.RecipeViewModel>
-
 <h2>All Recipes</h2>
 
-<table class="table table-condensed table-striped">
-    <tr>
-        <th>Recipe</th>
-        <th>Description</th>
-        <th>Rate</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <th>@Html.ActionLink(@item.Name, "Edit", new { recipeId = item.Id })</th>
-            <th>@item.Description</th>
-            <th>@item.Rate</th>
-        </tr>
-    }
-</table>
+<div id="top" class="row">
+    <div class="col-md-3">
+        <div class="input-group">
+            <input data-bind="value: searchTerm" class="form-control" name="search" id="search" type="text" placeholder="Search...">
+            <span class="input-group-btn">
+                <button data-bind="click: search" class="btn btn-primary" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div><!-- /input-group -->
+    </div>
 
-<p>
-    @Html.ActionLink("Create", "Create")
-</p>
+    <div class="col-md-9">
+        @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-primary pull-right" })
+    </div>
+</div><!-- /top -->
+
+<hr />
+
+<div id="list" class="row">
+    <div class="col-md-12">
+        <table class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Recipe</th>
+                    <th>Description</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+
+            <tbody data-bind="foreach: searchResults">
+                <tr style="{height:50px;}">
+                    <td><span data-bind="text: name"></span></td>
+                    <td><span data-bind="text: description"></span></td>
+                    <td><span data-bind="text: rate"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div><!-- /list -->
+
+<div id="list" class="row">
+    <div class="col-md-12">
+        <ul class="pager">
+            <li class="previous" data-bind="css: { 'disabled': !canPrevPage() }">
+                <a data-bind="click: prevPage" href="#">&larr; Previous</a>
+            </li>
+            <li class="next" data-bind="css: { 'disabled': !canNextPage() }">
+                <a data-bind="click: nextPage" href="#">Next &rarr;</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/App/recipes.viewmodel.js"> </script>
+}
+
