@@ -1,2 +1,2 @@
 # cook-book
-My first ASP.NET MVC application. Playing around and learning the framework.
+Getting my hands dirty in building a web application using ASP.NET MVC
